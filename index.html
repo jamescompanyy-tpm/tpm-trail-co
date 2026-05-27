@@ -1476,10 +1476,18 @@ function showPage(page) {
     window.scrollTo(0, 0);
     if (blog && !blog.dataset.initialized) {
       blog.dataset.initialized = 'true';
-      renderGrid(POSTS);
-      renderRecent();
-      const fc = document.getElementById('filterCount');
-      if (fc) fc.textContent = POSTS.length + ' posts';
+      // Show loading state
+      const fc = document.getElementById('featuredContainer');
+      const pg = document.getElementById('postsGrid');
+      if (fc) fc.innerHTML = '<p style="font-family:var(--ff-m);font-size:.8rem;color:var(--sage);padding:2rem 0;letter-spacing:.1em">Loading posts...</p>';
+      if (pg) pg.innerHTML = '';
+      // Load CMS posts then render
+      loadCMSPosts().then(() => {
+        renderGrid(ALL_POSTS);
+        renderRecent();
+        const filterCount = document.getElementById('filterCount');
+        if (filterCount) filterCount.textContent = ALL_POSTS.length + ' posts';
+      });
     }
   } else {
     mainEls.forEach(el => el.style.display = '');
@@ -1812,7 +1820,8 @@ function renderGrid(posts) {
 
 function renderRecent() {
   const list = document.getElementById('recentList');
-  list.innerHTML = POSTS.slice(0, 4).map(p => `
+  if (!list) return;
+  list.innerHTML = ALL_POSTS.slice(0, 4).map(p => `
     <li class="recent-item" onclick="openArticle(${p.id})">
       <div class="recent-thumb"><div class="recent-thumb-bg" style="background:${p.gradient}"></div></div>
       <div class="recent-info">
@@ -1824,18 +1833,17 @@ function renderRecent() {
 
 function filterPosts(cat, btn) {
   currentFilter = cat;
-  // update button states
   if (btn) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
   }
-  const filtered = cat === 'all' ? POSTS : POSTS.filter(p => p.category === cat);
+  const filtered = cat === 'all' ? ALL_POSTS : ALL_POSTS.filter(p => p.category === cat);
   renderGrid(filtered);
 }
 
 // ── article modal ──
 function openArticle(id) {
-  const post = POSTS.find(p => p.id === id);
+  const post = ALL_POSTS.find(p => p.id === id);
   if (!post) return;
   document.getElementById('articleHeroImg').style.background = post.gradient;
   document.getElementById('articleCat').innerHTML = `<span class="post-category ${getCatClass(post.category)}">${post.category}</span>`;
@@ -1897,6 +1905,36 @@ const blogObs = new IntersectionObserver(entries => {
 }, { threshold: .1 });
 
 // Blog initialises on first visit via showPage('blog') — not on page load
+
+// ═══════════════════════════════════════════════
+// CMS POST FETCHER
+// Fetches posts from Netlify Function (reads _posts/ from GitHub)
+// and merges them with the hardcoded POSTS array.
+// CMS posts appear first (newest first), hardcoded posts follow.
+// ═══════════════════════════════════════════════
+let ALL_POSTS = [...POSTS]; // start with hardcoded posts
+let cmsLoaded = false;
+
+async function loadCMSPosts() {
+  if (cmsLoaded) return;
+  try {
+    const res = await fetch('/.netlify/functions/get-posts');
+    if (!res.ok) throw new Error('Function returned ' + res.status);
+    const cmsPosts = await res.json();
+    if (Array.isArray(cmsPosts) && cmsPosts.length > 0) {
+      // Merge: CMS posts first, then hardcoded sample posts
+      ALL_POSTS = [...cmsPosts, ...POSTS];
+      // If any CMS post is marked featured, unmark hardcoded featured
+      if (cmsPosts.some(p => p.featured)) {
+        ALL_POSTS = ALL_POSTS.map(p => p.source === 'cms' ? p : { ...p, featured: false });
+      }
+    }
+  } catch (e) {
+    // Function not available locally or no posts yet — use hardcoded posts
+    console.info('CMS posts not loaded, using sample posts:', e.message);
+  }
+  cmsLoaded = true;
+}
 
 </script>
 
