@@ -797,10 +797,82 @@
   }
   .toast.show { transform: translateY(0); opacity: 1; }
 
+  /* ── hamburger button ── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: .4rem;
+    z-index: 101;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: transform .3s, opacity .3s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ── mobile drawer ── */
+  .nav-drawer {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(28,58,40,.97);
+    backdrop-filter: blur(16px);
+    z-index: 99;
+    padding: 5rem 2rem 2.5rem;
+    flex-direction: column;
+    gap: 0;
+    transform: translateY(-100%);
+    transition: transform .35s cubic-bezier(.23,1,.32,1);
+  }
+  .nav-drawer.open { transform: translateY(0); }
+  .nav-drawer a {
+    font-family: var(--ff-mono);
+    font-size: .85rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.8);
+    text-decoration: none;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    transition: color .2s;
+  }
+  .nav-drawer a:hover, .nav-drawer a:active { color: var(--gold); }
+  .nav-drawer .drawer-book {
+    margin-top: 1.5rem;
+    background: var(--gold);
+    color: var(--forest);
+    font-family: var(--ff-mono);
+    font-size: .72rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: .9rem;
+    text-align: center;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    transition: background .2s;
+  }
+  .nav-drawer .drawer-book:hover { background: var(--clay); }
+
   /* mobile */
   @media (max-width: 768px) {
     nav { padding: 1rem 1.5rem; }
     .nav-links { display: none; }
+    .nav-book { display: none; }
+    .nav-hamburger { display: flex; }
+    .nav-drawer { display: flex; }
     section { padding: 5rem 1.5rem; }
     .booking-layout,
     .about-layout,
@@ -1098,6 +1170,9 @@ footer { background: var(--ink); padding: 2.5rem 3rem; display: flex; align-item
   .featured-img { aspect-ratio: 16/9; }
   nav { padding: 1rem 1.5rem; }
   .nav-links { display: none; }
+  .nav-book { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-drawer { display: flex; }
   .filters-bar { padding: .8rem 1.5rem; }
   .blog-hero { padding: 3.5rem 1.5rem 2.5rem; }
   .article-content { padding: 1.5rem 1.5rem 2rem; }
@@ -1124,7 +1199,20 @@ footer { background: var(--ink); padding: 2.5rem 3rem; display: flex; align-item
     <li><a href="#" onclick="showPage('main'); setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100); return false;">Contact</a></li>
   </ul>
   <button class="nav-book" onclick="showPage('main'); setTimeout(()=>document.getElementById('booking').scrollIntoView({behavior:'smooth'}),100)">Book a hike</button>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" onclick="toggleDrawer()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- mobile nav drawer -->
+<div class="nav-drawer" id="navDrawer" aria-hidden="true">
+  <a href="#" onclick="closeDrawer(); showPage('main'); window.scrollTo(0,0); return false;">Home</a>
+  <a href="#" onclick="closeDrawer(); showPage('main'); setTimeout(()=>document.getElementById('services').scrollIntoView({behavior:'smooth'}),150); return false;">Services</a>
+  <a href="#" onclick="closeDrawer(); showPage('main'); setTimeout(()=>document.getElementById('about').scrollIntoView({behavior:'smooth'}),150); return false;">About</a>
+  <a href="#" onclick="closeDrawer(); showPage('blog'); return false;">Journal</a>
+  <a href="#" onclick="closeDrawer(); showPage('main'); setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),150); return false;">Contact</a>
+  <button class="drawer-book" onclick="closeDrawer(); showPage('main'); setTimeout(()=>document.getElementById('booking').scrollIntoView({behavior:'smooth'}),150)">Book a hike</button>
+</div>
 
 <!-- hero -->
 <section id="hero">
@@ -1535,6 +1623,28 @@ footer { background: var(--ink); padding: 2.5rem 3rem; display: flex; align-item
     showToast('✉️ Message sent! We\'ll get back to you shortly.');
     e.target.reset();
   });
+
+// ═══════════════════════════════════════════════
+// MOBILE NAV DRAWER
+// ═══════════════════════════════════════════════
+function toggleDrawer() {
+  const btn = document.getElementById('navHamburger');
+  const drawer = document.getElementById('navDrawer');
+  const open = btn.classList.toggle('open');
+  drawer.classList.toggle('open', open);
+  btn.setAttribute('aria-expanded', open);
+  drawer.setAttribute('aria-hidden', !open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+function closeDrawer() {
+  const btn = document.getElementById('navHamburger');
+  const drawer = document.getElementById('navDrawer');
+  btn.classList.remove('open');
+  drawer.classList.remove('open');
+  btn.setAttribute('aria-expanded', 'false');
+  drawer.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
 
 // ═══════════════════════════════════════════════
 // PAGE SWITCHER — single-file SPA router
