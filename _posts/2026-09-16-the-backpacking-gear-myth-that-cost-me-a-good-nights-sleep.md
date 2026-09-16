@@ -45,3 +45,43 @@ Freestanding and semi-freestanding tents can be single-wall or double-wall. Sing
 Trekking pole tents: These use your trekking poles and stakes as the main support structure. They're the lightest tents but are generally a bit more expensive and complicated to pitch. I'd recommend them for more seasoned backpackers.
 
 Bivy sacks: Basically a waterproof sleeping bag cover that cocoons you, instead of acting like a standing shelter.
+
+
+
+Last but not least is your backpack. The most important considerations for your backpack are fit and space.
+
+
+
+For fit, you can either go to an outdoor store and be measured by a backpacking specialist, or measure yourself — it helps to have a friend do the measuring. What you're looking for is the distance between your C7 vertebra and your iliac crest:
+
+
+
+Find your C7 vertebra: Tilt your head forward and feel for the prominent bony bump at the base of your neck, where your shoulders meet. This is your C7 vertebra.
+
+
+
+Find your iliac crest: Put your hands comfortably on top of your hip bones, with your index fingers pointing forward and your thumbs pointing backward. Have your friend imagine a horizontal line connecting your two thumbs across your spine.
+
+
+
+Measure the distance: Stand up straight with your head in a neutral position. Have your friend measure from your C7 vertebra straight down the contours of your spine to the imaginary line between your thumbs.
+
+
+
+Match to a size chart: Use this measurement (usually between 15 and 22 inches) to check the specific manufacturer's size chart. There are a growing number of manufacturers that offer adjustable-sized backpacks — if you get one of those, make sure to adjust it to your size.
+
+
+
+Backpacks are measured by the number of liters of space they can hold.
+
+
+
+For day hikes, a 15-30 liter backpack will hold some snacks, water, and a light jacket in case the weather changes.
+
+
+
+For a 1-2 day backpacking trip, a 45-55 liter backpack is going to be best for beginners — this is enough space for your sleep system, tent, and enough food for one or two nights.
+
+
+
+And for a multi-day trip, you're going to want at a minimum 50-70 liters for three-season trips. This will give you enough space to fit your tent, sleep system, food, and a few creature comforts.
