@@ -12,7 +12,7 @@ excerpt: "Getting into backpacking can appear to be more complicated than it
   bit confusing. But if you take away the brand names and focus on the basics of
   what each piece of equipment is intended to do, the confusion falls by the
   wayside."
-gradient: "linear-gradient(135deg, #1c3a28 0%, #2d5a3d 40%, #4a7c59 100%)"
+gradient: "linear-gradient(135deg, #3d2b1f 0%, #6b4c35 50%, #c4956a 100%)"
 ---
 Let's begin with a big misconception: that getting the right backpack is the most important piece of gear. It seems like common sense to want a fancy, comfortable pack. It is important, but I'd side with most backpacking enthusiasts and say the most important item to start with is your sleeping system, followed by your tent, and third your backpack. I learned this lesson the hard way: even after I listened to the experts, I thought I knew better and bought a really fancy backpack and tent before finally investing in a nice sleeping bag. Turns out, carrying an uncomfortable backpack is something you can deal with, but having poor sleep on the trail makes for a miserable journey.
 
