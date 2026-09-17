@@ -1,5 +1,5 @@
 ---
-title: The Backpacking Gear Myth That Cost Me a Good Night's Sleep
+title: The principals of gear selection
 date: September 16, 2026
 category: Gear
 featured: true
